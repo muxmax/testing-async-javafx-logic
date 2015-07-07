@@ -1,36 +1,35 @@
 package de.muximweb.javafx.testing_asynchonous_logic;
 
-import de.muximweb.javafx.testing_asynchonous_logic.execution.AsyncExecution;
 import de.muximweb.javafx.testing_asynchonous_logic.service.SomeService;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A business class to be tested.
  */
 public class ClassToTest {
 
-    private final AsyncExecution<String> asyncExecution;
-
-    public ClassToTest(AsyncExecution<String> asyncExecution) {
-        this.asyncExecution = asyncExecution;
-        asyncExecution.onStart(() -> new SomeService().longLastingOperation());
-    }
-
     public void execLongLastingOperation(StringProperty resultStringProperty, IntegerProperty progressProperty) {
 
         progressProperty.setValue(-1);
 
-        asyncExecution.onSucceeded(resultString -> {
-            resultStringProperty.setValue(resultString);
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                return new SomeService().longLastingOperation();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).whenComplete((resultString, exception) -> Platform.runLater(() -> {
+            if (exception != null) {
+                resultStringProperty.setValue("An error occurred: no result");
+            } else {
+                resultStringProperty.setValue(resultString);
+            }
             progressProperty.setValue(1);
-        });
-        asyncExecution.onFailed(e -> {
-            resultStringProperty.setValue("An error occurred: no result");
-            progressProperty.setValue(1);
-        });
-
-        asyncExecution.start();
+        }));
     }
 
 }

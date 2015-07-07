@@ -1,6 +1,5 @@
 package de.muximweb.javafx.testing_asynchonous_logic;
 
-import de.muximweb.javafx.testing_asynchonous_logic.execution.AsyncExecution;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -11,7 +10,6 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,41 +20,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JfxRunner.class)
 public class ClassToTestTest {
 
-    private AsyncExecution<String> asyncExecutionMock = new AsyncExecution<String>() {
-
-        Consumer<Throwable> failureConsumer;
-        Consumer<String> resultConsumer;
-        ErrorProneSupplier<String> supplier;
-
-        @Override
-        public AsyncExecution onStart(ErrorProneSupplier<String> supplier) {
-            this.supplier = supplier;
-            return this;
-        }
-
-        @Override
-        public AsyncExecution onSucceeded(Consumer<String> resultConsumer) {
-            this.resultConsumer = resultConsumer;
-            return this;
-        }
-
-        @Override
-        public AsyncExecution onFailed(Consumer<Throwable> failureConsumer) {
-            this.failureConsumer = failureConsumer;
-            return this;
-        }
-
-        @Override
-        public void start() {
-            try {
-                resultConsumer.accept(supplier.get());
-            } catch (Throwable throwable) {
-                failureConsumer.accept(throwable);
-            }
-        }
-    };
-
-    private ClassToTest cut = new ClassToTest(asyncExecutionMock);
+    private ClassToTest cut = new ClassToTest();
 
     @Test
     public void testLongLastingOperationCallingOnce() throws ExecutionException, InterruptedException {

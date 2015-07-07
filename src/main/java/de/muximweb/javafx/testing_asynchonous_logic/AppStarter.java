@@ -1,6 +1,5 @@
 package de.muximweb.javafx.testing_asynchonous_logic;
 
-import de.muximweb.javafx.testing_asynchonous_logic.execution.AsyncExecution;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -37,7 +36,7 @@ public class AppStarter extends Application {
         Button buttonStartOperation = new Button("Start long lasting operation");
         buttonStartOperation.setOnAction(e -> {
             resultStringProperty.set("...");
-            new ClassToTest(new AsyncExecution()).execLongLastingOperation(resultStringProperty,
+            new ClassToTest().execLongLastingOperation(resultStringProperty,
                     progressProperty);
         });
 
