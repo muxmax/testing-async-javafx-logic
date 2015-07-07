@@ -1,10 +1,12 @@
 package de.muximweb.javafx.testing_asynchonous_logic;
 
+import de.saxsys.javafx.test.JfxRunner;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * A test for {@link ClassToTest}.
  */
+@RunWith(JfxRunner.class)
 public class ClassToTestTest {
 
     private ClassToTest cut = new ClassToTest();

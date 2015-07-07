@@ -1,6 +1,5 @@
 package de.muximweb.javafx.testing_asynchonous_logic;
 
-import de.muximweb.javafx.testing_asynchonous_logic.service.SomeService;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -25,28 +24,29 @@ public class AppStarter extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
         IntegerProperty progressProperty = new SimpleIntegerProperty(0);
         ProgressIndicator indicator = new ProgressIndicator();
         indicator.progressProperty().bind(progressProperty);
 
         StringProperty resultStringProperty = new SimpleStringProperty("...");
-        Label resultLabel = new Label("Result of long lasting operation: ...");
+        Label resultLabel = new Label();
         resultLabel.textProperty().bind(Bindings.concat("Result of long lasting operation: ").concat
                 (resultStringProperty));
 
         Button buttonStartOperation = new Button("Start long lasting operation");
         buttonStartOperation.setOnAction(e -> {
-            new ClassToTest().execLongLastingOperation(resultStringProperty, progressProperty);
+            resultStringProperty.set("...");
+            new ClassToTest().execLongLastingOperation(resultStringProperty,
+                    progressProperty);
         });
 
         VBox root = new VBox(20);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(20));
         root.getChildren().addAll(indicator, buttonStartOperation, resultLabel);
+
         primaryStage.setScene(new Scene(root, 400, 200));
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {

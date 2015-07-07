@@ -8,13 +8,11 @@ public class SomeService {
     /**
      * A very long lasting operation blocking the current thread. So this operation should be executed asynchronously.
      *
-     * @param onFinished The callback to be called when the execution is finished.
      * @return A String indicating that the operation has finished.
      * @throws InterruptedException Is thrown when an error occurs during execution.
      */
-    public String longLastingOperation(Runnable onFinished) throws InterruptedException {
+    public String longLastingOperation() throws InterruptedException {
         Thread.sleep(5000);
-        onFinished.run();
         return "An expensive result";
     }
 }

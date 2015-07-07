@@ -20,6 +20,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+        <dependency>
+            <groupId>de.saxsys</groupId>
+            <artifactId>jfx-testrunner</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -39,7 +44,7 @@
                             <!-- remove comments to add goals to default life cycle this way when
                                 executing "mvn clean install" on the root module this goals will be executed
                                 too -->
-                             <!--<goal>jar</goal> <goal>native</goal>-->
+                            <!--<goal>jar</goal> <goal>native</goal>-->
                         </goals>
                     </execution>
                 </executions>
